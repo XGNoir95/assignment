@@ -41,6 +41,8 @@ class firstPage extends StatelessWidget {
               ' with HyperMotionV, PlayStyles optimized by Opta, and a revolutionized Frostbite™ Engine.','USD.449'),
           gameWidget('Minecraft Java Edition','mcraft.png','Minecraft is a game made up of blocks, creatures, and community.'
               ' You can survive the night or build a work of art – the choice is all yours.','USD.259'),
+          gameWidget('COD Warzone','cod.jpg','A massive combat experience with up to 150 players from the world of Call of Duty:'
+              ' Modern Warfare, free-to-play for everyone.','USD.259'),
         ],
       ),
     );
