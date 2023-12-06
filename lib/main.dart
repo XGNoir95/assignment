@@ -182,6 +182,7 @@ class _SecondPageState extends State<SecondPage> {
                 PaymentOption('assets/images/nagad.png', 'Nagad'),
                 PaymentOption('assets/images/rocket.png', 'Rocket'),
                 PaymentOption('assets/images/mastercard.png', 'Mastercard'),
+                PaymentOption('assets/images/mastercard.png', 'Paypal'),
                 // Add more payment options as needed
               ],
             ),
