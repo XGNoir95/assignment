@@ -43,6 +43,12 @@ class firstPage extends StatelessWidget {
               ' You can survive the night or build a work of art – the choice is all yours.','USD.259'),
           gameWidget('COD Warzone','cod.jpg','A massive combat experience with up to 150 players from the world of Call of Duty:'
               ' Modern Warfare, free-to-play for everyone.','USD.259'),
+          gameWidget('PUBG PC','pubg.jpg','PUBG is a pvp shooter game in which up to one hundred players fight in a battle royale,'
+              ' where players fight to remain the last alive.','USD.299'),
+          gameWidget('GTA VI','gta6.jpg','Grand Theft Auto VI is an action-adventure game set in the fictional open world state of Leonida—based on'
+              ' Florida—which includes Vice City, a fictional version of Miami.','USD.799'),
+          gameWidget('Forza Horizon','forza.jpg','Forza Horizon focuses specifically on casual street racing, rather than professionally on race tracks,'
+              ,'USD.359'),
         ],
       ),
     );

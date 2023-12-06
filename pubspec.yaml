@@ -69,7 +69,11 @@ flutter:
      - assets/images/img3.png
      - assets/images/FC24.jpg
      - assets/images/mcraft.png
-     - assets/images/cod.jpg
+     - assets/images/pubg.jpg
+     - assets/images/forza.jpg
+     - assets/images/FC24.jpg
+     - assets/images/gta6.jpg
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
