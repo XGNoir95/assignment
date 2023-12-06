@@ -34,9 +34,15 @@ class firstPage extends StatelessWidget {
         padding: EdgeInsets.all(16.0),
         children: [
           gameWidget('Marvels Spider-Man 2','img1.jpeg','Spider-Man 2 from Insomniac Games launched at the end of October and '
-              'quickly became one of the best-selling game of 2023.','USD.8500'),
+              'quickly became one of the best-selling game of 2023.','USD.399'),
           gameWidget('Elden Ring','img2.jpg','Elden Ring released all the way back in February 2022, and its still doing well, '
-              'being a top seller for 2023 thus far','USD.7500')
+              'being a top seller for 2023 thus far','USD.349'),
+          gameWidget('EA 24','FC24.jpg','EA SPORTS FC™ 24 welcomes you to the most true-to-football experience'
+              ' with HyperMotionV, PlayStyles optimized by Opta, and a revolutionized Frostbite™ Engine.','USD.449'),
+          gameWidget('Minecraft Java Edition','mcraft.png','Minecraft is a game made up of blocks, creatures, and community.'
+              ' You can survive the night or build a work of art – the choice is all yours.','USD.259'),
+          gameWidget('COD Warzone','cod.jpg','A massive combat experience with up to 150 players from the world of Call of Duty:'
+              ' Modern Warfare, free-to-play for everyone.','USD.259'),
         ],
       ),
     );
@@ -126,7 +132,7 @@ class _SecondPageState extends State<SecondPage> {
       backgroundColor: Colors.black,
       appBar: AppBar(
         title: const Text(
-          'Checkout',
+          'Buy Now Page',
           style: TextStyle(
             color: Colors.black,
             fontFamily: 'Merriweather',
@@ -146,7 +152,7 @@ class _SecondPageState extends State<SecondPage> {
             Text('\nShort Description:\n${widget.description}',style: TextStyle(fontSize: 15, fontFamily: 'Merriweather',color: Colors.white)),
             Text('\nPrice: \$${widget.price}', style: TextStyle(fontSize: 15, fontFamily: 'Merriweather',color: Colors.white)),
             DropdownButton<String>(
-              items: paymentOptions.map((String value) {
+              items: ['X-BOX', 'PS5', 'PC'].map((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
                   child: Text(value),
@@ -159,9 +165,9 @@ class _SecondPageState extends State<SecondPage> {
               },
               value: selectedOption,
               hint: Text(
-                'Select payment option',
+                'Select platform',
                 style: TextStyle(
-                  fontSize: 1,
+                  fontSize: 15,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
                 ),
@@ -181,8 +187,8 @@ class _SecondPageState extends State<SecondPage> {
                 PaymentOption('assets/images/bkash.png', 'BKash'),
                 PaymentOption('assets/images/nagad.png', 'Nagad'),
                 PaymentOption('assets/images/rocket.png', 'Rocket'),
-                PaymentOption('assets/images/mastercard.png', 'Mastercard'),
-                PaymentOption('assets/images/mastercard.png', 'Paypal'),
+                PaymentOption('assets/images/mastercard.png', 'M.Card'),
+                PaymentOption('assets/images/img3.png', 'AmEx'),
                 // Add more payment options as needed
               ],
             ),
