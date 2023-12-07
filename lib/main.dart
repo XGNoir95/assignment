@@ -33,13 +33,13 @@ class firstPage extends StatelessWidget {
       body: ListView(
         padding: EdgeInsets.all(16.0),
         children: [
-          gameWidget('Marvels Spider-Man 2','img1.jpeg','Spider-Man 2 from Insomniac Games launched at the end of October and '
+          gameWidget('Spider-Man 2','img1.jpeg','Spider-Man 2 from Insomniac Games launched at the end of October and '
               'quickly became one of the best-selling game of 2023.','USD.399'),
           gameWidget('Elden Ring','img2.jpg','Elden Ring released all the way back in February 2022, and its still doing well, '
               'being a top seller for 2023 thus far','USD.349'),
           gameWidget('EA 24','FC24.jpg','EA SPORTS FC™ 24 welcomes you to the most true-to-football experience'
               ' with HyperMotionV, PlayStyles optimized by Opta, and a revolutionized Frostbite™ Engine.','USD.449'),
-          gameWidget('Minecraft Java Edition','mcraft.png','Minecraft is a game made up of blocks, creatures, and community.'
+          gameWidget('Minecraft™ ','mcraft.png','Minecraft is a game made up of blocks, creatures, and community.'
               ' You can survive the night or build a work of art – the choice is all yours.','USD.259'),
           gameWidget('COD Warzone','cod.jpg','A massive combat experience with up to 150 players from the world of Call of Duty:'
               ' Modern Warfare, free-to-play for everyone.','USD.259'),
@@ -73,12 +73,13 @@ class gameWidget extends StatelessWidget {
           ListTile(
             leading: Image.asset(
               'assets/images/$imageName',
-              width: 100.0, // Adjust the width as needed
-              height: 100.0, // Adjust the height as needed
+              width: 100.0,
+              height: 100.0,
             ),
-            title: Text(
+            title: Center(child: Text(
               gameName,
               style: TextStyle(fontSize: 25, fontFamily: 'Merriweather',color: Colors.amber),
+            ),
             ),
             subtitle: Text(
               description,
@@ -86,11 +87,11 @@ class gameWidget extends StatelessWidget {
             ),
           ),
           ListTile(
-            title: Text(
+            title: Center(child: Text(
               'Price: $price',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,fontFamily: 'Merriweather',color: Colors.white),
             ),
-          ),
+          ),),
           ElevatedButton.icon(
             onPressed: () {
               Navigator.push(
@@ -130,7 +131,7 @@ class SecondPage extends StatefulWidget {
 
 class _SecondPageState extends State<SecondPage> {
   String? selectedOption;
-  List<String> paymentOptions = ['Credit Card', 'PayPal', 'Google Pay']; // Add more options as needed
+  List<String> paymentOptions = ['Credit Card', 'PayPal', 'Google Pay'];
 
   @override
   Widget build(BuildContext context) {
@@ -152,7 +153,7 @@ class _SecondPageState extends State<SecondPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('${widget.gameName}\n', style: TextStyle(fontSize: 20, fontFamily: 'Merriweather',color: Colors.amber)),
+            Center(child: Text('${widget.gameName}\n', style: TextStyle(fontSize: 20, fontFamily: 'Merriweather',color: Colors.amber))),
             Image.asset('assets/images/${widget.imageName}'),
 
             Text('\nShort Description:\n${widget.description}',style: TextStyle(fontSize: 15, fontFamily: 'Merriweather',color: Colors.white)),
@@ -179,7 +180,7 @@ class _SecondPageState extends State<SecondPage> {
                 ),
               ),
             ),
-            SizedBox(height: 16.0), // Add spacing between dropdown and payment options
+            SizedBox(height: 16.0),
             Text(
               'Choose Payment Method:',
               style: TextStyle(
@@ -195,12 +196,12 @@ class _SecondPageState extends State<SecondPage> {
                 PaymentOption('assets/images/rocket.png', 'Rocket'),
                 PaymentOption('assets/images/mastercard.png', 'M.Card'),
                 PaymentOption('assets/images/img3.png', 'AmEx'),
-                // Add more payment options as needed
+
               ],
             ),
             ElevatedButton(
               onPressed: () {
-                // You can use the selectedOption here or perform any other action
+
                 Navigator.pop(context);
               },
               child: Text(
