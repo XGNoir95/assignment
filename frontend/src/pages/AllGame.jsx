@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Axios from "axios";
+import axios from "axios";
 
 const AllGame = () => {
   const [data, setData] = useState({});
@@ -9,9 +9,12 @@ const AllGame = () => {
   const [selectedPrice, setSelectedPrice] = useState(300); // Set the max price according to your data
   const [selectedPlatform, setSelectedPlatform] = useState("");
 
+  // Set Axios default withCredentials to true
+  axios.defaults.withCredentials = true;
+
   const getData = async () => {
     try {
-      const response = await Axios.get("http://localhost:1000/api/v1/sort-games");
+      const response = await axios.get("https://gn-api.vercel.app/api/v1/sort-games");
       setData(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
