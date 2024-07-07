@@ -1,16 +1,30 @@
 const express = require("express");
+const cors = require("cors");
 const app =  express();
 
 require("dotenv").config();
 require("./conn/conn");
-const cors = require("cors");
+
 const User = require("./routes/user");
 const Games = require("./routes/game");
 const Favourites = require("./routes/favourite");
 const Cart = require("./routes/cart");
 const Order = require("./routes/order");
+
+app.use(cors(
+    {
+      origin:[""],
+      methods: ["POST","GET"],
+      credentials: true
+    }
+));
 app.use(express.json());
-app.use(cors());
+
+// Root route
+app.get("/", (req, res) => {
+  res.send('Server is running');
+});
+
 //route handling
 app.use("/api/v1", User);
 app.use("/api/v1", Games);
