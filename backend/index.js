@@ -13,7 +13,7 @@ const Order = require("./routes/order");
 
 app.use(cors(
     {
-      origin:[""],
+      origin:["https://gn-front-zeta.vercel.app"],
       methods: ["POST","GET"],
       credentials: true
     }
