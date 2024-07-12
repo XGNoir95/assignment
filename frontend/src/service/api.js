@@ -2,7 +2,7 @@ import axios from 'axios';
 import { API_NOTIFICATION_MESSAGES, SERVICE_URLS } from '../constants/config';
 import { getAccessToken, setAccessToken, getType } from '../utils/common-utils';
 
-const API_URL = 'http://localhost:8000';
+const API_URL = 'https://blog-api-rho-ten.vercel.app';
 
 const axiosInstance = axios.create({
     baseURL: API_URL,
