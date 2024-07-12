@@ -31,6 +31,7 @@ export const signupUser = async (request, response) => {
         return response.status(500).json({ msg: 'Error while signing up user' });
     }
 };
+
 export const loginUser = async (request, response) => {
     try {
         const { username, password } = request.body;
@@ -64,6 +65,7 @@ export const loginUser = async (request, response) => {
         return response.status(500).json({ msg: 'Error while logging in the user' });
     }
 };
+
 export const logoutUser = async (request, response) => {
     try {
         const { token } = request.body;
