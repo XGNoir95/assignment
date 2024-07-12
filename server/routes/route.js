@@ -1,5 +1,5 @@
 import express from 'express';
-import { loginUser, signupUser, logoutUser } from '../controller/user-controller.js';
+import { signupUser, loginUser, logoutUser } from '../controller/user-controller.js';
 import { createPost, updatePost, deletePost, getPost, getAllPosts } from '../controller/post-controller.js';
 import { uploadImage, getImage } from '../controller/image-controller.js';
 //import { newComment, getComments, deleteComment } from '../controller/comment-controller.js';
@@ -9,8 +9,8 @@ import upload from '../utils/upload.js';
 const router = express.Router();
 
 // User routes
-router.post('/login', loginUser);
 router.post('/signup', signupUser);
+router.post('/login', loginUser);
 router.post('/logout', logoutUser);
 
 // Post routes
