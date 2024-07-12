@@ -10,7 +10,7 @@ const app = express();
 
 // Middleware
 app.use(cors({
-    origin: [""],
+    origin: ["https://blog-front-bay.vercel.app/account"],
     methods: ["POST", "GET"],
     credentials: true
 }));
