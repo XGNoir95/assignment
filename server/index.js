@@ -9,9 +9,18 @@ dotenv.config();
 const app = express();
 
 // Middleware
-app.use(cors());
+app.use(cors({
+    origin: [""],
+    methods: ["POST", "GET"],
+    credentials: true
+}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// Root route
+app.get('/', (req, res) => {
+    res.send('Server is running');
+});
 
 // Routes (assuming Router is correctly defined in './routes/route.js')
 import Router from './routes/route.js';
