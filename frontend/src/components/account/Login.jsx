@@ -1,10 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { TextField, Box, Button, Typography, styled } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { API } from '../../service/api';
+import axios from 'axios'; // Import axios
 import { DataContext } from '../../context/DataProvider';
-
-
 
 const Component = styled(Box)`
     width: 400px;
@@ -96,15 +94,15 @@ const Login = ({ isUserAuthenticated }) => {
 
     const loginUser = async () => {
         try {
-            let response = await API.userLogin(login);
-            if (response.isSuccess) {
+            let response = await axios.post('your_login_api_endpoint', login);
+            if (response.data.isSuccess) {
                 showError('');
 
-                sessionStorage.setItem('accessToken', 'Bearer ${response.data.accessToken}');
-                sessionStorage.setItem('refreshToken', 'Bearer ${response.data.refreshToken}');
+                sessionStorage.setItem('accessToken', `Bearer ${response.data.accessToken}`);
+                sessionStorage.setItem('refreshToken', `Bearer ${response.data.refreshToken}`);
                 setAccount({ name: response.data.name, username: response.data.username });
 
-                isUserAuthenticated(true); // Call as a function
+                isUserAuthenticated(true);
                 setLogin(loginInitialValues);
                 navigate('/');
             } else {
@@ -118,8 +116,8 @@ const Login = ({ isUserAuthenticated }) => {
 
     const signupUser = async () => {
         try {
-            let response = await API.userSignup(signup);
-            if (response.isSuccess) {
+            let response = await axios.post('your_signup_api_endpoint', signup);
+            if (response.data.isSuccess) {
                 showError('');
                 setSignup(signupInitialValues);
                 toggleAccount('login');
@@ -128,6 +126,7 @@ const Login = ({ isUserAuthenticated }) => {
             }
         } catch (error) {
             showError('Something went wrong! Please try again later.');
+            console.log(error);
         }
     };
 
@@ -144,14 +143,14 @@ const Login = ({ isUserAuthenticated }) => {
                         <TextField
                             variant="standard"
                             value={login.username}
-                            onChange={(e) => onValueChange(e)}
+                            onChange={onValueChange}
                             name="username"
                             label="Enter Username"
                         />
                         <TextField
                             variant="standard"
                             value={login.password}
-                            onChange={(e) => onValueChange(e)}
+                            onChange={onValueChange}
                             name="password"
                             label="Enter Password"
                             type="password"
@@ -172,25 +171,27 @@ const Login = ({ isUserAuthenticated }) => {
                         <TextField
                             variant="standard"
                             value={signup.name}
-                            onChange={(e) => onInputChange(e)}
+                            onChange={onInputChange}
                             name="name"
                             label="Enter Name"
                         />
                         <TextField
                             variant="standard"
                             value={signup.username}
-                            onChange={(e) => onInputChange(e)}
+                            onChange={onInputChange}
                             name="username"
                             label="Enter Username"
                         />
                         <TextField
                             variant="standard"
                             value={signup.password}
-                            onChange={(e) => onInputChange(e)}
+                            onChange={onInputChange}
                             name="password"
                             label="Enter Password"
                             type="password"
                         />
+
+                        {error && <Error>{error}</Error>}
 
                         <SignupButton onClick={signupUser}>Signup</SignupButton>
                         <Text style={{ textAlign: 'center' }}>OR</Text>
