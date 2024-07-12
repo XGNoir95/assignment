@@ -15,7 +15,7 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
     function(config) {
         if (config.TYPE.params) {
-            config.params = config.TYPE.params
+            config.params = config.TYPE.params;
         } else if (config.TYPE.query) {
             config.url = config.url + '/' + config.TYPE.query;
         }
@@ -28,18 +28,12 @@ axiosInstance.interceptors.request.use(
 
 axiosInstance.interceptors.response.use(
     function(response) {
-        // Stop global loader here
         return processResponse(response);
     },
     function(error) {
-        // Stop global loader here
         return Promise.reject(ProcessError(error));
     }
 );
-
-///////////////////////////////
-// Process Axios Response
-///////////////////////////////
 
 const processResponse = (response) => {
     if (response.status === 200 || response.status === 201) {
@@ -54,15 +48,9 @@ const processResponse = (response) => {
     }
 };
 
-///////////////////////////////
-// Process Axios Error
-///////////////////////////////
-
 const ProcessError = async (error) => {
     if (error.response) {
-        // Server responded with a non-2xx status code
         if (error.response.status === 403) {
-            // Clear sessionStorage on 403 error
             sessionStorage.clear();
         }
         console.log("ERROR IN RESPONSE: ", error.toJSON());
@@ -72,7 +60,6 @@ const ProcessError = async (error) => {
             code: error.response.status
         };
     } else if (error.request) {
-        // Request made but no response received
         console.log("ERROR IN REQUEST: ", error.toJSON());
         return {
             isError: true,
@@ -80,7 +67,6 @@ const ProcessError = async (error) => {
             code: ""
         };
     } else {
-        // Something happened in setting up the request that triggered an Error
         console.log("ERROR: ", error.toJSON());
         return {
             isError: true,
@@ -89,10 +75,6 @@ const ProcessError = async (error) => {
         };
     }
 };
-
-///////////////////////////////
-// API Object with Service URLs
-///////////////////////////////
 
 const API = {};
 
