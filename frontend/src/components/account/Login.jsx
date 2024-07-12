@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { TextField, Box, Button, Typography, styled } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios'; // Import axios
+import { API } from '../../service/api';
 import { DataContext } from '../../context/DataProvider';
 
 const Component = styled(Box)`
@@ -94,8 +94,8 @@ const Login = ({ isUserAuthenticated }) => {
 
     const loginUser = async () => {
         try {
-            let response = await axios.post('your_login_api_endpoint', login);
-            if (response.data.isSuccess) {
+            let response = await API.userLogin(login);
+            if (response.isSuccess) {
                 showError('');
 
                 sessionStorage.setItem('accessToken', `Bearer ${response.data.accessToken}`);
@@ -116,8 +116,8 @@ const Login = ({ isUserAuthenticated }) => {
 
     const signupUser = async () => {
         try {
-            let response = await axios.post('your_signup_api_endpoint', signup);
-            if (response.data.isSuccess) {
+            let response = await API.userSignup(signup);
+            if (response.isSuccess) {
                 showError('');
                 setSignup(signupInitialValues);
                 toggleAccount('login');
