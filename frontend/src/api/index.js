@@ -1,11 +1,5 @@
 const Blog = [
-    {
-      "id": 1,
-      "name": "A Culinary Journey in Vietnam",
-      "type": "food",
-      "body": "Vietnamese cuisine, a delightful fusion of flavors and textures! From savory pho to fresh spring rolls, each dish reflects Vietnam's rich culinary heritage. The balance of sweet, sour, salty, and spicy flavors creates a harmonious dining experience that captivates food enthusiasts worldwide. Explore bustling markets, savor street food delights, and learn the art of Vietnamese cooking from local chefs. Join me on a culinary journey through Vietnam and discover the magic of its gastronomic treasures.",
-      "author": "Linh"
-    },
+    
     {
       "id": 2,
       "name": "In Search of Northern Lights",
