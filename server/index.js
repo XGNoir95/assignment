@@ -8,16 +8,14 @@ dotenv.config();
 
 const app = express();
 
-
-
 // Middleware
 app.use(cors({
-  origin: "https://blog-front-bay.vercel.app",
-  methods: ["POST", "GET"],
-  credentials: true
+  origin: "https://blog-front-bay.vercel.app", 
+  methods: ["POST", "GET"], 
+  credentials: true 
 }));
 
-app.options('*', cors());
+app.options('*', cors()); 
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -27,7 +25,7 @@ app.get('/', (req, res) => {
     res.send('Server is running');
 });
 
-// Routes (assuming Router is correctly defined in './routes/route.js')
+
 import Router from './routes/route.js';
 app.use('/', Router);
 
@@ -35,7 +33,7 @@ const PORT = process.env.PORT || 8000;
 const username = process.env.DB_USERNAME;
 const password = process.env.DB_PASSWORD;
 
-// Establish database connection using connectDB function
+
 connectDB(username, password)
   .then(() => {
     app.listen(PORT, () => {
