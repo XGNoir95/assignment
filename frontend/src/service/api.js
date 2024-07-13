@@ -79,29 +79,42 @@ const ProcessError = async (error) => {
 const API = {};
 
 for (const [key, value] of Object.entries(SERVICE_URLS)) {
-    API[key] = (body, showUploadProgress, showDownloadProgress) =>
-        axiosInstance({
+    API[key] = (body, showUploadProgress, showDownloadProgress) => {
+        const requestData = {
             method: value.method,
             url: value.url,
-            data: value.method === 'DELETE' ? '' : body,
             responseType: value.responseType,
             headers: {
                 authorization: getAccessToken(),
             },
             TYPE: getType(value, body),
-            onUploadProgress: function(progressEvent) {
-                if (showUploadProgress) {
-                    let percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-                    showUploadProgress(percentCompleted);
-                }
-            },
-            onDownloadProgress: function(progressEvent) {
-                if (showDownloadProgress) {
-                    let percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-                    showDownloadProgress(percentCompleted);
-                }
-            }
-        });
+        };
+
+        // Handle data payload for DELETE requests
+        if (value.method === 'DELETE') {
+            requestData.data = undefined; // No data payload for DELETE requests
+        } else {
+            requestData.data = body;
+        }
+
+        // Handle upload and download progress if provided
+        if (showUploadProgress) {
+            requestData.onUploadProgress = function(progressEvent) {
+                let percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+                showUploadProgress(percentCompleted);
+            };
+        }
+
+        if (showDownloadProgress) {
+            requestData.onDownloadProgress = function(progressEvent) {
+                let percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+                showDownloadProgress(percentCompleted);
+            };
+        }
+
+        return axiosInstance(requestData);
+    };
 }
+
 
 export { API };
