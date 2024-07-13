@@ -50,9 +50,22 @@ const processResponse = (response) => {
 
 const ProcessError = async (error) => {
     if (error.response) {
-        if (error.response.status === 403) {
+        if (error.response.status === 401) {
+            // Unauthorized access handling (e.g., clear session)
             sessionStorage.clear();
+            console.log("Unauthorized access detected. Session cleared.");
+            return {
+                isError: true,
+                msg: "Unauthorized: Please log in again.",
+                code: 401
+            };
+        } else if (error.response.status === 403) {
+            // Handle other specific status codes as needed
+            console.log("Forbidden: ", error.response.data?.message);
+        } else {
+            console.log("Error Response Status: ", error.response.status);
         }
+
         console.log("ERROR IN RESPONSE: ", error.toJSON());
         return {
             isError: true,
