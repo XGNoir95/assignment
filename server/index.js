@@ -8,12 +8,17 @@ dotenv.config();
 
 const app = express();
 
+
+
 // Middleware
 app.use(cors({
-    origin: ["https://blog-front-bay.vercel.app/account"],
-    methods: ["POST", "GET"],
-    credentials: true
+  origin: "https://blog-front-bay.vercel.app",
+  methods: ["POST", "GET"],
+  credentials: true
 }));
+
+app.options('*', cors());
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
