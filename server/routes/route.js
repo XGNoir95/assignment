@@ -10,7 +10,30 @@ const router = express.Router();
 
 // User routes
 router.post('/signup', signupUser);
-router.post('/login', loginUser);
+// Route for user login
+router.post('/login', async (req, res) => {
+    try {
+        const { username, password } = req.body;
+
+        // Example of simple validation (replace with your actual validation logic)
+        if (!username || !password) {
+            return res.status(400).json({ message: 'Username and password are required' });
+        }
+
+        // Call controller function to handle login logic
+        const loginResult = await loginUser(username, password);
+
+        // Example of handling successful login
+        if (loginResult.success) {
+            return res.status(200).json({ message: 'Login successful', user: loginResult.user });
+        } else {
+            return res.status(401).json({ message: 'Invalid username or password' });
+        }
+    } catch (error) {
+        console.error('Error in login:', error);
+        return res.status(500).json({ message: 'Error while logging in the user' });
+    }
+});
 router.post('/logout', logoutUser);
 
 // Post routes
