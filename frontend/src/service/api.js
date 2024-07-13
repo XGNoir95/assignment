@@ -47,6 +47,7 @@ const processResponse = (response) => {
         };
     }
 };
+
 const ProcessError = async (error) => {
     if (error.response) {
         if (error.response.status === 403) {
@@ -74,7 +75,6 @@ const ProcessError = async (error) => {
         };
     }
 };
-
 
 const API = {};
 
