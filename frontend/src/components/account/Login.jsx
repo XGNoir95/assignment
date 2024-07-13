@@ -106,7 +106,7 @@ const Login = ({ isUserAuthenticated }) => {
                 setLogin(loginInitialValues);
                 navigate('/');
             } else {
-                showError('Invalid username or password');
+                showError(response.msg || 'Invalid username or password');
             }
         } catch (error) {
             showError('Something went wrong! Please try again later.');
@@ -122,7 +122,7 @@ const Login = ({ isUserAuthenticated }) => {
                 setSignup(signupInitialValues);
                 toggleAccount('login');
             } else {
-                showError('Something went wrong! Please try again later.');
+                showError(response.msg || 'Something went wrong! Please try again later.');
             }
         } catch (error) {
             showError('Something went wrong! Please try again later.');
