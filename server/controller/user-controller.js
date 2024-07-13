@@ -32,37 +32,39 @@ export const signupUser = async (request, response) => {
     }
 };
 
-export const loginUser = async (username, password) => {
+export const loginUser = async (request, response) => {
     try {
+        const { username, password } = request.body;
+
         // Find user by username
         const user = await User.findOne({ username });
         if (!user) {
-            return { isSuccess: false, msg: 'Username does not exist' };
+            return response.status(400).json({ msg: 'Username does not exist' });
         }
 
         // Check if password matches
         const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) {
-            return { isSuccess: false, msg: 'Password does not match' };
+        if (isMatch) {
+            // Generate access token
+            const accessToken = jwt.sign(user.toJSON(), process.env.ACCESS_SECRET_KEY, { expiresIn: '15m' });
+            // Generate refresh token
+            const refreshToken = jwt.sign(user.toJSON(), process.env.REFRESH_SECRET_KEY);
+
+            // Save refresh token to database
+            const newToken = new Token({ token: refreshToken });
+            await newToken.save();
+
+            // Return successful login response with tokens and user details
+            return response.status(200).json({ accessToken, refreshToken, name: user.name, username: user.username });
+        } else {
+            // Password does not match
+            return response.status(400).json({ msg: 'Password does not match' });
         }
-
-        // Generate access token
-        const accessToken = jwt.sign(user.toJSON(), process.env.ACCESS_SECRET_KEY, { expiresIn: '15m' });
-        // Generate refresh token
-        const refreshToken = jwt.sign(user.toJSON(), process.env.REFRESH_SECRET_KEY);
-
-        // Save refresh token to database
-        const newToken = new Token({ token: refreshToken });
-        await newToken.save();
-
-        // Return successful login response with tokens and user details
-        return { isSuccess: true, data: { accessToken, refreshToken, name: user.name, username: user.username } };
     } catch (error) {
         console.error('Error while logging in user:', error);
-        throw error; // Propagate the error to be handled by the caller
+        return response.status(500).json({ msg: 'Error while logging in the user' });
     }
 };
-
 
 export const logoutUser = async (request, response) => {
     try {
