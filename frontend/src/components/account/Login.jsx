@@ -92,27 +92,37 @@ const Login = ({ isUserAuthenticated }) => {
         setSignup({ ...signup, [e.target.name]: e.target.value });
     };
 
-    const loginUser = async () => {
-        try {
-            let response = await API.userLogin(login);
-            if (response.isSuccess) {
-                showError('');
-    
-                sessionStorage.setItem('accessToken', `Bearer ${response.data.accessToken}`);
-                sessionStorage.setItem('refreshToken', `Bearer ${response.data.refreshToken}`);
-                setAccount({ name: response.data.name, username: response.data.username });
-    
-                isUserAuthenticated(true);
-                setLogin(loginInitialValues);
-                navigate('/');
-            } else {
-                showError(response.msg || 'Invalid username or password');
-            }
-        } catch (error) {
-            showError('Something went wrong! Please try again later.');
-            console.log(error);
+     const loginUser = async (username, password) => {
+    try {
+        // Find user by username
+        const user = await User.findOne({ username });
+        if (!user) {
+            return { isSuccess: false, msg: 'Username does not exist' };
         }
-    };
+
+        // Check if password matches
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            return { isSuccess: false, msg: 'Password does not match' };
+        }
+
+        // Generate access token
+        const accessToken = jwt.sign(user.toJSON(), process.env.ACCESS_SECRET_KEY, { expiresIn: '15m' });
+        // Generate refresh token
+        const refreshToken = jwt.sign(user.toJSON(), process.env.REFRESH_SECRET_KEY);
+
+        // Save refresh token to database
+        const newToken = new Token({ token: refreshToken });
+        await newToken.save();
+
+        // Return successful login response with tokens and user details
+        return { isSuccess: true, data: { accessToken, refreshToken, name: user.name, username: user.username } };
+    } catch (error) {
+        console.error('Error while logging in user:', error);
+        throw error; // Propagate the error to be handled by the caller
+    }
+};
+
     
 
     const signupUser = async () => {
