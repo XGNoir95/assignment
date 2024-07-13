@@ -94,7 +94,12 @@ const Login = ({ isUserAuthenticated }) => {
 
     const loginUser = async () => {
         try {
-            let response = await API.userLogin(login);
+            const response = await axios.post('https://your-api-endpoint.com/login', login, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                withCredentials: true, // Send cookies or tokens
+            });
             if (response.isSuccess) {
                 showError('');
 
