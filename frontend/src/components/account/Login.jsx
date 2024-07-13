@@ -112,7 +112,8 @@ const Login = ({ isUserAuthenticated }) => {
             }
         } catch (error) {
             showError('Something went wrong! Please try again later.');
-            console.log(error);
+            //console.log(error);
+            console.error('Login Error:', error); 
         }
     };
 
@@ -128,6 +129,7 @@ const Login = ({ isUserAuthenticated }) => {
             }
         } catch (error) {
             showError('Something went wrong! Please try again later.');
+            console.error('Signup Error:', error);
         }
     };
 
