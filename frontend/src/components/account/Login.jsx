@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { TextField, Box, Button, Typography, styled } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios'; // Import Axios
+import { API } from '../../service/api';
 import { DataContext } from '../../context/DataProvider';
+
+// Styled components and initial values...
 
 const Component = styled(Box)`
     width: 400px;
@@ -94,15 +96,15 @@ const Login = ({ isUserAuthenticated }) => {
 
     const loginUser = async () => {
         try {
-            let response = await axios.post('https://blog-api-rho-ten.vercel.app/login', login, { withCredentials: true });
-            if (response.data.isSuccess) {
+            let response = await API.userLogin(login);
+            if (response.isSuccess) {
                 showError('');
 
-                sessionStorage.setItem('accessToken', `Bearer ${response.data.accessToken}`);
-                sessionStorage.setItem('refreshToken', `Bearer ${response.data.refreshToken}`);
+                sessionStorage.setItem('accessToken', 'Bearer ${response.data.accessToken}');
+                sessionStorage.setItem('refreshToken', 'Bearer ${response.data.refreshToken}');
                 setAccount({ name: response.data.name, username: response.data.username });
 
-                isUserAuthenticated(true);
+                isUserAuthenticated(true); // Call as a function
                 setLogin(loginInitialValues);
                 navigate('/');
             } else {
@@ -110,14 +112,15 @@ const Login = ({ isUserAuthenticated }) => {
             }
         } catch (error) {
             showError('Something went wrong! Please try again later.');
-            console.log(error);
+            //console.log(error);
+            console.error('Login Error:', error); 
         }
     };
 
     const signupUser = async () => {
         try {
-            let response = await axios.post('https://blog-api-rho-ten.vercel.app/signup', signup, { withCredentials: true });
-            if (response.data.isSuccess) {
+            let response = await API.userSignup(signup);
+            if (response.isSuccess) {
                 showError('');
                 setSignup(signupInitialValues);
                 toggleAccount('login');
@@ -126,7 +129,7 @@ const Login = ({ isUserAuthenticated }) => {
             }
         } catch (error) {
             showError('Something went wrong! Please try again later.');
-            console.log(error);
+            console.error('Signup Error:', error);
         }
     };
 
@@ -143,14 +146,14 @@ const Login = ({ isUserAuthenticated }) => {
                         <TextField
                             variant="standard"
                             value={login.username}
-                            onChange={onValueChange}
+                            onChange={(e) => onValueChange(e)}
                             name="username"
                             label="Enter Username"
                         />
                         <TextField
                             variant="standard"
                             value={login.password}
-                            onChange={onValueChange}
+                            onChange={(e) => onValueChange(e)}
                             name="password"
                             label="Enter Password"
                             type="password"
@@ -171,27 +174,25 @@ const Login = ({ isUserAuthenticated }) => {
                         <TextField
                             variant="standard"
                             value={signup.name}
-                            onChange={onInputChange}
+                            onChange={(e) => onInputChange(e)}
                             name="name"
                             label="Enter Name"
                         />
                         <TextField
                             variant="standard"
                             value={signup.username}
-                            onChange={onInputChange}
+                            onChange={(e) => onInputChange(e)}
                             name="username"
                             label="Enter Username"
                         />
                         <TextField
                             variant="standard"
                             value={signup.password}
-                            onChange={onInputChange}
+                            onChange={(e) => onInputChange(e)}
                             name="password"
                             label="Enter Password"
                             type="password"
                         />
-
-                        {error && <Error>{error}</Error>}
 
                         <SignupButton onClick={signupUser}>Signup</SignupButton>
                         <Text style={{ textAlign: 'center' }}>OR</Text>
