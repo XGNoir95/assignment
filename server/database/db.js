@@ -1,21 +1,20 @@
 import mongoose from 'mongoose';
-//import dotenv from 'dotenv';
+import dotenv from 'dotenv';
 
-//dotenv.config();
+dotenv.config();
 
-const mongoURI = 'mongodb+srv://mihamaisha:ourblog@cluster0.au0xlrg.mongodb.net/helloBlog?retryWrites=true&w=majority&appName=Cluster0';
-const connectDB = async (username, password) => {
+const connectDB = async () => {
     try {
-      await mongoose.connect(mongoURI, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        // useCreateIndex: true, // Uncomment if needed
-      });
-      console.log('MongoDB connected');
+        await mongoose.connect(process.env.DB, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+            // useCreateIndex: true, // Uncomment if needed
+        });
+        console.log('MongoDB connected');
     } catch (error) {
-      console.error('MongoDB connection error:', error);
-      process.exit(1); // Ensure to exit the process if the database connection fails
+        console.error('MongoDB connection error:', error);
+        process.exit(1); // Ensure to exit the process if the database connection fails
     }
-  };
-  
-  export { connectDB };
+};
+
+export { connectDB };
