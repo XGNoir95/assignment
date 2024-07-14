@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { TextField, Box, Button, Typography, styled } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { API } from '../../service/api';
+import axios from 'axios'; // Import Axios
 import { DataContext } from '../../context/DataProvider';
 
 const Component = styled(Box)`
@@ -94,13 +94,8 @@ const Login = ({ isUserAuthenticated }) => {
 
     const loginUser = async () => {
         try {
-            const response = await axios.post('https://your-api-endpoint.com/login', login, {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                withCredentials: true, // Send cookies or tokens
-            });
-            if (response.isSuccess) {
+            let response = await axios.post('https://blog-api-rho-ten.vercel.app/login', login, { withCredentials: true });
+            if (response.data.isSuccess) {
                 showError('');
 
                 sessionStorage.setItem('accessToken', `Bearer ${response.data.accessToken}`);
@@ -121,8 +116,8 @@ const Login = ({ isUserAuthenticated }) => {
 
     const signupUser = async () => {
         try {
-            let response = await API.userSignup(signup);
-            if (response.isSuccess) {
+            let response = await axios.post('https://blog-api-rho-ten.vercel.app/signup', signup, { withCredentials: true });
+            if (response.data.isSuccess) {
                 showError('');
                 setSignup(signupInitialValues);
                 toggleAccount('login');
@@ -134,7 +129,7 @@ const Login = ({ isUserAuthenticated }) => {
             console.log(error);
         }
     };
-//hello
+
     const toggleSignup = () => {
         toggleAccount(account === 'signup' ? 'login' : 'signup');
     };
